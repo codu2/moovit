@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
 
+import Maps from "../component/Map/Maps";
 import IconButton from "../component/UI/IconButton";
 import PrimaryButton from "../component/UI/PrimaryButton";
 
@@ -11,13 +11,6 @@ import { Colors } from "../constants/styles";
 const Map = () => {
   const [location, setLocation] = useState(null);
   const [message, setMessage] = useState(null);
-
-  const region = {
-    latitude: location ? location.latitude : 37.78825,
-    longitude: location ? location.longitude : -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
 
   const getLocation = async () => {
     setLocation(null);
@@ -55,17 +48,7 @@ const Map = () => {
 
   return (
     <View style={styles.screen}>
-      <MapView initialRegion={region} style={styles.map}>
-        {location && (
-          <Marker
-            coordinate={{
-              latitude: location.latitude,
-              longitude: location.longitude,
-            }}
-            pinColor={Colors.accent700}
-          />
-        )}
-      </MapView>
+      <Maps location={location} />
       {location && (
         <View style={styles.reload}>
           <IconButton
