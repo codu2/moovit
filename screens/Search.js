@@ -22,8 +22,8 @@ const Search = () => {
             <GooglePlacesInput placeholder="New York" />
           </View>
         </View>
-        <View style={styles.label}>
-          <Text>To</Text>
+        <View style={styles.inputContainer}>
+          <Text style={styles.label}>To</Text>
           <View style={styles.input}>
             <GooglePlacesInput placeholder="Manhattan" />
           </View>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   inputContainer: {
-    marginVertical: 8,
+    margin: 8,
   },
   label: {
     fontSize: 14,

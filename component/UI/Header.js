@@ -1,14 +1,24 @@
 import { StyleSheet, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import IconButton from "./IconButton";
 import { Colors } from "../../constants/styles";
 
-const Header = () => {
+const Header = ({ style, goBack }) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <View style={styles.button}>
-        <IconButton icon="arrow-back" color={Colors.primary700} size={28} />
-      </View>
+    <View style={[styles.container, style]}>
+      {goBack && (
+        <View style={styles.button}>
+          <IconButton
+            icon="arrow-back"
+            color={Colors.primary700}
+            size={28}
+            onPress={() => navigation.goBack()}
+          />
+        </View>
+      )}
       <View style={styles.buttons}>
         <IconButton
           icon="notifications-outline"
@@ -35,7 +45,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
   buttons: {
     flexDirection: "row",
