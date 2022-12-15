@@ -3,7 +3,44 @@ import { StyleSheet, SafeAreaView, ScrollView, View, Text } from "react-native";
 import Header from "../component/UI/Header";
 import CategoryItem from "../component/Category/CategoryItem";
 
-const Category = () => {
+const transports = [
+  {
+    id: "t1",
+    videoUri: require("../assets/icons/taxi.mp4"),
+    name: "Taxi",
+  },
+  {
+    id: "t2",
+    videoUri: require("../assets/icons/bus.mp4"),
+    name: "Bus",
+  },
+  {
+    id: "t3",
+    videoUri: require("../assets/icons/subway.mp4"),
+    name: "Subway",
+  },
+  {
+    id: "t4",
+    videoUri: require("../assets/icons/train.mp4"),
+    name: "Train",
+  },
+  {
+    id: "t5",
+    videoUri: require("../assets/icons/cruise.mp4"),
+    name: "Cruise",
+  },
+  {
+    id: "t6",
+    videoUri: require("../assets/icons/plane.mp4"),
+    name: "Plane",
+  },
+];
+
+const Category = ({ navigation }) => {
+  const selectTransport = (transport) => {
+    navigation.navigate("Transport", { transport });
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <Header />
@@ -12,24 +49,15 @@ const Category = () => {
           <Text style={styles.text}>All Transport</Text>
         </View>
         <View style={styles.wrapper}>
-          <CategoryItem videoUri={require("../assets/icons/taxi.mp4")}>
-            Taxi
-          </CategoryItem>
-          <CategoryItem videoUri={require("../assets/icons/bus.mp4")}>
-            Bus
-          </CategoryItem>
-          <CategoryItem videoUri={require("../assets/icons/subway.mp4")}>
-            Subway
-          </CategoryItem>
-          <CategoryItem videoUri={require("../assets/icons/train.mp4")}>
-            Train
-          </CategoryItem>
-          <CategoryItem videoUri={require("../assets/icons/cruise.mp4")}>
-            Cruise
-          </CategoryItem>
-          <CategoryItem videoUri={require("../assets/icons/plane.mp4")}>
-            Plane
-          </CategoryItem>
+          {transports.map((transport) => (
+            <CategoryItem
+              key={transport.id}
+              videoUri={transport.videoUri}
+              onPress={selectTransport.bind(this, transport)}
+            >
+              {transport.name}
+            </CategoryItem>
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
