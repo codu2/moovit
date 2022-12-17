@@ -1,14 +1,18 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Alert } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import { useDispatch } from "react-redux";
 
 import { GOOGLE_MAPS_API } from "@env";
 
 import { Colors } from "../../constants/styles";
+import { getAddress, getDistanceAndDuration } from "../../store/coordinate";
 
 const { width, height } = Dimensions.get("window");
 
 const Maps = ({ location, coordinate }) => {
+  const dispatch = useDispatch();
+
   let region = {
     latitude: location ? location.latitude : 37.78825,
     longitude: location ? location.longitude : -122.4324,
@@ -56,6 +60,36 @@ const Maps = ({ location, coordinate }) => {
             strokeWidth={3}
             strokeColor={Colors.accent700}
             mode="TRANSIT"
+            onStart={(params) => {
+              console.log(
+                `Started routing between "${params.origin}" and "${params.destination}"`
+              );
+            }}
+            onReady={(result) => {
+              //console.log(`Distance: ${result.distance} km`);
+              //console.log(`Duration: ${result.duration} min.`);
+
+              dispatch(
+                getDistanceAndDuration({
+                  distance: result.distance,
+                  duration: result.duration,
+                })
+              );
+              dispatch(
+                getAddress({
+                  start: result.legs.start_address,
+                  end: result.legs.end_address,
+                })
+              );
+            }}
+            onError={(errorMessage) => {
+              //console.log(errorMessage);
+              Alert.alert(
+                "No search results found.",
+                "Please check your input or try again later"
+              );
+            }}
+            // waypoints 경유지 배열
           />
         </>
       )}

@@ -1,7 +1,10 @@
 import { StyleSheet, SafeAreaView, ScrollView, View, Text } from "react-native";
+import { useDispatch } from "react-redux";
 
 import Header from "../component/UI/Header";
 import CategoryItem from "../component/Category/CategoryItem";
+
+import { selectTransport } from "../store/coordinate";
 
 const transports = [
   {
@@ -37,7 +40,10 @@ const transports = [
 ];
 
 const Category = ({ navigation }) => {
-  const selectTransport = (transport) => {
+  const dispatch = useDispatch();
+
+  const onPressTransport = (transport) => {
+    dispatch(selectTransport(transport.name));
     navigation.navigate("Transport", { transport });
   };
 
@@ -53,7 +59,7 @@ const Category = ({ navigation }) => {
             <CategoryItem
               key={transport.id}
               videoUri={transport.videoUri}
-              onPress={selectTransport.bind(this, transport)}
+              onPress={onPressTransport.bind(this, transport)}
             >
               {transport.name}
             </CategoryItem>
