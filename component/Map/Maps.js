@@ -77,8 +77,8 @@ const Maps = ({ location, coordinate }) => {
               );
               dispatch(
                 getAddress({
-                  start: result.legs.start_address,
-                  end: result.legs.end_address,
+                  start: result.legs[0].start_address,
+                  end: result.legs[0].end_address,
                 })
               );
             }}

@@ -30,7 +30,7 @@ const coordinateSlice = createSlice({
       state.duration = action.payload.duration;
     },
     getAddress: (state, action) => {
-      state.address = { start: action.payload.start, end: action.payload.end };
+      state.address = action.payload;
     },
   },
 });
