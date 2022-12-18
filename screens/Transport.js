@@ -4,17 +4,17 @@ import { useSelector } from "react-redux";
 import Header from "../component/UI/Header";
 import GooglePlacesInput from "../component/Search/GooglePlacesInput";
 import Maps from "../component/Map/Maps";
-import { useEffect } from "react";
+import IconButton from "../component/UI/IconButton";
+
+import { Colors } from "../constants/styles";
 
 const Transport = ({ route, navigation }) => {
   const transport = route.params.transport;
   const coordinate = useSelector((state) => state.coordinate);
 
-  useEffect(() => {
-    if (coordinate.distance && coordinate.duration) {
-      navigation.navigate("Booking");
-    }
-  }, [coordinate.distance, coordinate.duration]);
+  const onPressNextButton = () => {
+    navigation.navigate("Booking");
+  };
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -46,6 +46,16 @@ const Transport = ({ route, navigation }) => {
                 origin: coordinate.origin,
                 destination: coordinate.destination,
               }}
+            />
+          </View>
+        )}
+        {coordinate.distance && coordinate.duration && (
+          <View style={styles.button}>
+            <IconButton
+              icon="arrow-forward"
+              color={Colors.accent700}
+              size={32}
+              onPress={onPressNextButton}
             />
           </View>
         )}
@@ -88,5 +98,9 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  button: {
+    marginTop: 8,
+    alignItems: "flex-end",
   },
 });

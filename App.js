@@ -14,6 +14,7 @@ import Map from "./screens/Map";
 import MyTicket from "./screens/MyTicket";
 import Transport from "./screens/Transport";
 import Login from "./screens/Login";
+import Booking from "./screens/Booking";
 
 import { Colors } from "./constants/styles";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -102,6 +103,11 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="BottomTabs" component={BottomTabs} />
             <Stack.Screen name="Transport" component={Transport} />
+            <Stack.Screen
+              name="Booking"
+              component={Booking}
+              options={{ presentation: "transparentModal" }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
