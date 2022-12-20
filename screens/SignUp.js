@@ -6,33 +6,34 @@ import AuthForm from "../component/Auth/AuthForm";
 import LoadingOverlay from "../component/UI/LoadingOverlay";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { login } from "../util/auth";
+import { signup } from "../util/auth";
 import { authenticate } from "../store/auth";
 
-const Login = ({ navigation }) => {
+const SignUp = ({ navigation }) => {
   const dispatch = useDispatch();
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit = async ({ email, password, confirmPassword }) => {
     setIsAuthenticating(true);
 
     const emailIsValid = email.trim().includes("@");
     const passwordIsValid = password.trim().length > 6;
+    const confirmPasswordIsValid = password === confirmPassword;
 
-    if (!emailIsValid || !passwordIsValid) {
+    if (!emailIsValid || !passwordIsValid || !confirmPasswordIsValid) {
       Alert.alert("Invalid input", "Please check your entered credentials.");
       return;
     }
 
     try {
-      const token = await login(email, password);
+      const token = await signup(email, password);
       dispatch(authenticate(token));
 
       navigation.navigate("BottomTabs");
     } catch (error) {
       Alert.alert(
         "Authentication failed!",
-        "Could not log you in. Please check your credentials or try again later."
+        "Could not create user, please check your input and try again later."
       );
       setIsAuthenticating(false);
     }
@@ -57,13 +58,13 @@ const Login = ({ navigation }) => {
           />
           <Text style={styles.title}>MOOVIT</Text>
         </View>
-        <AuthForm onSubmit={onSubmit} isLogin />
+        <AuthForm onSubmit={onSubmit} />
       </View>
     </View>
   );
 };
 
-export default Login;
+export default SignUp;
 
 const styles = StyleSheet.create({
   screen: {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 420,
+    height: 320,
   },
   titleContainer: {
     marginTop: 20,
