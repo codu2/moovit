@@ -1,11 +1,20 @@
 import { StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 import IconButton from "./IconButton";
+
 import { Colors } from "../../constants/styles";
+import { logout } from "../../store/auth";
 
 const Header = ({ style, goBack }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigation.replace("Auth");
+  };
 
   return (
     <View style={[styles.container, style]}>
@@ -31,6 +40,13 @@ const Header = ({ style, goBack }) => {
           color={Colors.primary700}
           size={24}
           style={styles.button}
+        />
+        <IconButton
+          icon="exit-outline"
+          color={Colors.primary700}
+          size={26}
+          style={styles.button}
+          onPress={logoutHandler}
         />
       </View>
     </View>
